@@ -15,7 +15,7 @@ const initialState : TodoList = {
 
 let nextId = 1;
 
-export const point = createSlice({
+export const slice = createSlice({
 	name: "todo",
 	initialState,
 	reducers: {
@@ -36,4 +36,4 @@ export const point = createSlice({
 	}
 })
 
-export const { addTodo, deleteTodo } = point.actions
+export const { addTodo, deleteTodo } = slice.actions

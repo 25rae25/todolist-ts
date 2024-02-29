@@ -2,30 +2,46 @@ import styled from "styled-components"
 import Input from "../components/Input/\bInput"
 import Button from "../components/Button/Button"
 import { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { RootState } from "../store/store"
+import { addTodo, deleteTodo } from "../store/slice/slice"
 
 
 const TodoPage = () => {
-	const [todo, setTodo] = useState<String>("");
-
+	const [todo, setTodo] = useState<string>("");
+	const dispatch = useDispatch();
+	const todos = useSelector((state : RootState) => state.todos);
 
 	const handleChange=(e: React.ChangeEvent<HTMLInputElement>)=>{
 		setTodo(e.target.value);
 	}
 
+	const handleTodoInput = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		setTodo("");
+		if(todo.trim() !== '') {
+			dispatch(addTodo(todo))
+		}
+	}
+
+	const handleDeleteTodo = (id:number) => {
+		dispatch(deleteTodo(id))
+	}
 
 	return(
 		<Wrapper>
 			<TodoTitle>TodoList</TodoTitle>
-			<TodoForm>
-				<Input placeholder="input" handleChange={handleChange} value={todo as string} />
+			<TodoForm onSubmit={handleTodoInput}>
+				<Input placeholder="input" handleChange={handleChange} value={todo} />
 				<Button> add </Button>
 			</TodoForm>
 			<TodoContainer>
-				<TodoListWrap>
-					<TodoList>
-						<Button> delete </Button>
-					</TodoList>
+				{todos.todoList.map((item) => (
+				<TodoListWrap key={item.id}>
+					<TodoList>{item.todo}</TodoList>
+					<Button onClick={() => handleDeleteTodo(item.id)}> delete </Button>
 				</TodoListWrap>
+			))}
 			</TodoContainer>
 		</Wrapper>
 	)
@@ -65,7 +81,8 @@ const TodoListWrap = styled.ul`
 	width: 700px;
 	height: 70px;
 	display: flex ;
-	justify-content: end;
+	align-items: center;
+	justify-content: space-between;
 	padding: 10px;
 	border: 1px solid #000;
 `

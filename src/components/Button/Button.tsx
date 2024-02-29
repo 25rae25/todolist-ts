@@ -1,14 +1,13 @@
 import styled from 'styled-components';
 
-
 interface ButtonProps {
-	childern: string;
+	children: string;
 	onClick?:()=> void;
 }
 
-const Button = ({ childern, onClick }:ButtonProps) => {
+const Button = ({ children, onClick }:ButtonProps) => {
 	return(
-		<ButtonContainer onClick={onClick}>{childern}</ButtonContainer>
+		<ButtonContainer onClick={onClick}>{children}</ButtonContainer>
 	)
 }
 

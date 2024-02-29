@@ -23,8 +23,9 @@ const InputContainer = styled.div`
 	padding: 8px;
 	border : 1px solid #000;
 `
+
 const InputText = styled.input`
 	width:100%;
 	height:100%;
-	border: none
+	border: none;
 `
